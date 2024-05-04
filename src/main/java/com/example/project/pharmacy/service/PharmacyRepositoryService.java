@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -37,5 +38,10 @@ public class PharmacyRepositoryService {
         }
 
         entity.changePharmacyAddress(address);
+    }
+
+    @Transactional(readOnly = true) // 단순히 읽기만 하는 작업이라면 이 옵션을 주는 것이 엔티티와 스냅샷을 비교하는 더티체킹 과정이 생략되어 성능향상에 도움
+    public List<Pharmacy> findAll() {
+        return pharmacyRepository.findAll();
     }
 }
